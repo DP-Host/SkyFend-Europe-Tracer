@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="de" style="--sidebar-width: 400px; --title-margin-bottom: 80px; --main-title-margin-bottom: 25px;"><head>
+<html lang="de" style="--sidebar-width: 420px; --main-title-margin-bottom: 50px; --title-margin-bottom: 80px;"><head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1200, initial-scale=1.0">
     <title>Offline HTML-Seite</title>
+    <!-- Einbindung von TinyMCE für die Textbearbeitung -->
+    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,24 +21,18 @@
             padding: 20px;
             height: 100vh;
             position: fixed;
-            overflow-y: auto; /* Beginn new CODE: Scrollen ermöglichen */
+            overflow-y: auto;
         }
-        /* Beginn new CODE: Sicherstellen, dass die Navigationsleiste scrollbar ist */
         .sidebar ul {
             list-style-type: none;
             padding: 0;
-            max-height: 100vh; /* Begrenzung der Höhe der Navigationsleiste */
-            overflow-y: auto;  /* Scrollbar, wenn die Liste zu lang wird */
+            max-height: 100vh;
+            overflow-y: auto;
         }
-        /* END new CODE */
         .sidebar h2 {
             color: white;
             margin-bottom: 20px;
-            text-align: center; /* Beginn new CODE: Überschriften in Sidebar zentrieren */
-        }
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
+            text-align: center;
         }
         .sidebar ul li a {
             color: white;
@@ -44,24 +40,26 @@
             display: block;
             padding: 5px 0;
         }
-        /* Beginn new CODE: Überschriften zentrieren */
-        h1, h2 {
-            text-align: center; /* Überschriften zentriert */
+        /* Aktualisierte CSS-Regeln für die Überschriften innerhalb der spezifischen Divs */
+        .main-title h1, .video-title h2, .file-title h2 {
+            text-align: center;
         }
-        h1 {
-            margin-bottom: var(--main-title-margin-bottom, 40px); /* Dynamischer Abstand zwischen Hauptüberschrift und Video-Bereich */
+
+        /* Hauptüberschrift */
+        .main-title h1 {
+            margin-bottom: var(--main-title-margin-bottom, 40px);
         }
-        h2 {
-            margin-bottom: var(--title-margin-bottom, 40px); /* Abstand zwischen Titel und Titel 2 */
+
+        /* Video- und Datei-Bereichstitel */
+        .video-title h2, .file-title h2 {
+            margin-bottom: var(--title-margin-bottom, 40px);
         }
-        /* Beginn new CODE: Blocksatz für Text */
         p {
-            text-align: justify; /* Text im Blocksatz */
+            text-align: justify;
         }
-        /* Ende new CODE  */
         .container {
             flex: 1;
-            margin-left: calc(var(--sidebar-width, 200px) + 20px); /* Dynamisch abhängig von der Sidebar-Breite + zusätzlicher Abstand */
+            margin-left: calc(var(--sidebar-width, 200px) + 20px);
             padding: 20px;
             max-width: 800px;
             background: white;
@@ -71,12 +69,11 @@
             color: #333;
         }
         .video-container, .file-container {
-            margin: 0 auto 20px; /* Zentriert die Box horizontal und behält margin-bottom bei */
+            margin: 0 auto 20px;
             border: 1px solid #ddd;
             padding: 10px;
             width: 100%;
-            max-width: 90%; /* Box soll maximal 90% der verfügbaren Breite einnehmen */
-            /** HIER ÄNDERN AUF 90% UM WIEDER NE BOX ZU HABEN!!!!! */
+            max-width: 90%;
         }
         .edit-controls {
             margin-top: 10px;
@@ -90,34 +87,29 @@
             align-items: center;
         }
         .logo {
-            margin: 0 10px; /* Abstand zwischen den Bildern */
-            height: auto; /* Optionale Einstellung, um das Seitenverhältnis zu bewahren */
+            margin: 0 10px;
+            height: auto;
         }
         .logo1 {
-            width: 100px; /* Größe des ersten Logos */
+            width: 100px;
         }
         .logo2 {
-            width: 170px; /* Größe des zweiten Logos */
+            width: 170px;
         }
-        /* Normaler Stil für Navigationspunkte */
         .sidebar ul li a {
             color: white;
             text-decoration: none;
             display: block;
             padding: 5px 0;
         }
-
-        /* Spezielle Stile für die Überschriften Video-Bereich und Datei-Bereich */
         #navList a.section-heading {
             font-size: 18px;
             font-weight: bold;
-            color: #FFD700; /* Goldene Farbe als Beispiel, du kannst es anpassen */
+            color: #FFD700;
             margin-bottom: 10px;
             border-bottom: 1px solid #FFD700;
             padding-bottom: 5px;
         }
-
-        /* Beginn new CODE: Button-Styling für alle Buttons */
         .button {
             background-color: #4CAF50;
             color: white;
@@ -125,29 +117,24 @@
             border: none;
             cursor: pointer;
             margin-top: 20px;
-            margin-left: 20px; /* Abstand von der Sidebar */
+            margin-left: 20px;
         }
-        /* Ende new CODE */
-        /* CODE Start: Anpassung für die Admin-Logo-Bearbeitungsbox */
         .admin-logo-section {
-            margin: 0 auto 20px;  /* Gleiche Margins wie die anderen Boxen */
+            margin: 0 auto 20px;
             padding: 10px;
-            border: 1px solid #ddd; /* Gleiche Umrandung wie andere Boxen */
-            max-width: 90%; /* Maximale Breite wie bei den anderen Boxen */
-            background-color: white; /* Hintergrundfarbe anpassen */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box-Schatten für Konsistenz */
+            border: 1px solid #ddd;
+            max-width: 90%;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        /* CODE Ende */
-
         .admin-logo-section h2 {
             margin-bottom: 15px;
             text-align: center;
         }
         .invisible-space {
-            height: 50px; /* Höhe des unsichtbaren Platzes */
-            visibility: hidden; /* Unsichtbar machen */
+            height: 50px;
+            visibility: hidden;
         }
-        /* Ende Code für Admin-spezifische Logo-Bearbeitungsbox */
         .hidden {
             display: none;
         }
@@ -155,655 +142,248 @@
             display: flex;
             align-items: center;
         }
-
         .file-icon {
-            width: 24px; /* Passe die Größe nach Bedarf an */
+            width: 24px;
             height: 24px;
-            margin-right: 8px; /* Abstand zwischen Bild und Titel */
+            margin-right: 8px;
         }
-
+        .file-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .file-description {
+            margin-bottom: 10px;
+        }
+        /* Neue CSS-Regel für die Video-Titel */
+        .video-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
     </style>
-</head>
-<body>
+<link rel="stylesheet" type="text/css" id="mce-u2" href="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.0/skins/ui/oxide/skin.min.css"><link rel="stylesheet" type="text/css" id="mce-u3" href="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.0/skins/ui/oxide/content.inline.min.css"></head>
+<body spellcheck="false">
     <div class="sidebar">
-        <!-- Beginn new CODE: Externe Bilder nebeneinander -->
         <div class="logo-container">
-            <img src="https://drive.google.com/thumbnail?id=1dqIFW8RnxmQxOWCm2YbEr37wkrNOoWzR" alt="DP-DYNAMIC - Logo transparent.png" class="logo logo1" style="width: 100px;">
-            <img src="https://drive.google.com/thumbnail?id=1dpvEaqzi4TYQrb74pcNV6RhAPiv-ICp_" alt="Skyfend Europe Logo v2.png" class="logo logo2" style="width: 170px;">
+            <img src="https://drive.google.com/thumbnail?id=1dqIFW8RnxmQxOWCm2YbEr37wkrNOoWzR" alt="DP-DYNAMIC - Logo transparent.png" class="logo logo1" style="width: 150px;">
+            <img src="https://drive.google.com/thumbnail?id=1dpvEaqzi4TYQrb74pcNV6RhAPiv-ICp_" alt="Skyfend Europe Logo v2.png" class="logo logo2" style="width: 300px;">
         </div>
-        <!-- END new CODE -->
-        <!-- Bearbeitbare Inhaltsübersicht -->
-        <h2 id="navTitle" contenteditable="false">Inhaltsübersicht 2</h2>
-        <ul id="navList"><li><a href="#videoSection" class="section-heading">Videoanleitungen - SkyFend C2 App</a></li><li><a href="#video-0">C2 App offline update</a></li><li><a href="#video-1">C2 App online update</a></li><li><a href="#video-2">C2 Darstellung &amp; Ausrichtung</a></li><li><a href="#video-3">C2 Detektionsübersicht</a></li><li><a href="#video-4">C2 download offline Kartenmaterial</a></li><li><a href="#video-5">C2 Gerätemenü</a></li><li><a href="#video-6">C2 QR-Code &amp; what3words</a></li><li><a href="#video-7">C2 Schutz Ihrer Daten</a></li><li><a href="#video-8">C2 Wiedergabe + Video Erstellung zur Doku</a></li><li><a href="#video-9">C2 Zeitstempel</a></li><li><a href="#fileSection" class="section-heading">Datenblätter I Anleitungen I Aktualisierungen&nbsp;</a></li><li><a href="#file-0">240606-1 - Anleitung - Tracer-P DE.pdf</a></li><li class="invisible-space"></li></ul>
+        <h2 id="navTitle">Inhalt</h2>
+        <ul id="navList"><li><a href="#videoSection" class="section-heading">Videoanleitungen - SkyFend C2 App</a></li><li><a href="#video-title-0">C2 App offline update</a></li><li><a href="#video-title-1">C2 App online update</a></li><li><a href="#video-title-2">C2 Darstellung &amp; Ausrichtung</a></li><li><a href="#video-title-3">C2 Detektionsübersicht</a></li><li><a href="#video-title-4">C2 download offline Kartenmaterial</a></li><li><a href="#video-title-5">C2 Gerätemenü</a></li><li><a href="#video-title-6">C2 QR-Code &amp; what3words</a></li><li><a href="#video-title-7">C2 Schutz Ihrer Daten</a></li><li><a href="#video-title-8">C2 Wiedergabe + Video Erstellung zur Doku</a></li><li><a href="#video-title-9">C2 Zeitstempel</a></li><li><a href="#fileSection" class="section-heading">Datenblätter I Anleitungen I Aktualisierungen</a></li><li><a href="#file-title-0">Tracer P - Anleitung Deutsch</a></li><li><a href="#file-title-1">SkyFend C2 App V1.0.14.8</a></li><li class="invisible-space"></li></ul>
     </div>
 
     <div class="container">
-        <h1 id="mainTitle" contenteditable="false">DP-Dynamic Schulungsübersicht</h1>
+        <div id="mainTitle" class="main-title mce-content-body" style="position: relative;" spellcheck="false"><p class="MsoNormal" style="margin: 0cm; text-align: center; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;" align="center">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm; text-align: center; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;" align="center"><strong><u><span style="font-size: 24pt; line-height: 48px;">DP-Dynamic Schulungsübersicht</span></u></strong></p></div>
         
         <div id="videoSection">
-            <h2 id="videoTitle" contenteditable="false">Videoanleitungen - SkyFend C2 App</h2>
+            <div id="videoTitle" class="video-title mce-content-body" style="position: relative;" spellcheck="false"><p style="text-align: center;">Videoanleitungen - SkyFend C2 App<br><br></p></div>
             <div id="videoList"><div class="video-container" data-filename="SkyFend - C2 App offline update.mp4">
-                    <h3 contenteditable="false" id="video-0">C2 App offline update</h3>
-                    <p contenteditable="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">In diesem Tutorial Video zeigen wir Ihnen Schritt für Schritt, wie Sie die C2 App von SkyFend auch ohne Internetverbindung aktualisieren können. Die dafür notwendigen Daten können Sie unten im Download Bereich heruntergeladen und per USB-Stick oder SD-Karte übertragen. Wir führen Sie durch den gesamten Installationsprozess und zeigen, wie Sie die App Integrität überprüfen. Dieses Video ist ideal für Nutzer in Gebieten mit eingeschränktem Internetzugang oder erhöhten Sicherheitsanforderungen.<o:p></o:p></p></p>
-                    <iframe width="560" height="315" src="https://drive.google.com/file/d/1rn3owqGcbFItyaUem5m_g-7BdS41mBCp/preview" frameborder="0" allowfullscreen=""></iframe>
-                    
-                </div><div class="video-container" data-filename="SkyFend - C2 App online update.mp4">
-                    <h3 contenteditable="false" id="video-1">C2 App online update</h3>
-                    <p contenteditable="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses Video Tutorial führt Sie durch den einfachen Prozess des Online Updates der C2 App von SkyFend. Wir zeigen Ihnen, wie Sie die neueste Version direkt über Ihre Internetverbindung herunterladen und installieren können. Sie lernen, wie Sie die App auf verfügbare Updates prüfen, den Download Vorgang starten und die Installation sicher durchführen. Zusätzlich erklären wir, wie Sie die erfolgreiche Aktualisierung verifizieren und was zu tun ist, falls Probleme auftreten. Ideal für alle Nutzer, die ihre C2 App schnell und unkompliziert auf dem neuesten Stand halten möchten.<o:p></o:p></p></p>
-                    <iframe width="560" height="315" src="https://drive.google.com/file/d/1rnpVh56ezzYTq77dqQcyRmDiPlB2ehQ9/preview" frameborder="0" allowfullscreen=""></iframe>
-                    
-                </div><div class="video-container" data-filename="SkyFend - C2 Darstellung &amp; Ausrichtung.mp4">
-                    <h3 contenteditable="false" id="video-2">C2 Darstellung &amp; Ausrichtung</h3>
-                    <p contenteditable="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses Video Tutorial führt Sie durch die wesentlichen Funktionen der Benutzeroberfläche der SkyFend C2 App. Sie lernen, wie Sie:<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Das Alarmmanagement für Drohnenmeldungen nutzen<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Mit dem Messwerkzeug präzise Entfernungen bestimmen<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Die Kartenausrichtung anpassen und den Nordpfeil verwenden<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Zwischen verschiedenen Kartenansichten wechseln<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Flugbahnen von Drohnen visualisieren und anpassen<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Ihre Position manuell setzen können<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Ideal für neue Nutzer und zur Auffrischung für erfahrene Anwender. Nach diesem Tutorial navigieren Sie souverän durch die Hauptfunktionen der App und optimieren die Darstellung nach Ihren Bedürfnissen.<o:p></o:p></p></p>
-                    <iframe width="560" height="315" src="https://drive.google.com/file/d/1rolWhoUs-95MVvrlmTWVfPw4eCf2WLyx/preview" frameborder="0" allowfullscreen=""></iframe>
-                    
-                </div><div class="video-container" data-filename="SkyFend - C2 Detektionsübersicht.mp4">
-                    <h3 contenteditable="false" id="video-3">C2 Detektionsübersicht</h3>
-                    <p contenteditable="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses umfassende Video Tutorial führt Sie durch die Detektionsübersicht der SkyFend C2 App und erklärt wichtige Funktionen zur Drohnenverwaltung:<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Unterscheidung zwischen fremden und bekannten Drohnen in der Übersicht<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Schnelles Erfassen erkannter Drohnen als 'bekannt'<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Erstellung und Verwaltung der Whitelist für eigene Drohnen<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Detaillierte Eingabe von Drohneninformationen (Anbieter, Seriennummer, Modell, Zweck)<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Import und Export von Whitelist-Daten für effiziente Verwaltung<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Ideal für Nutzer, die die Drohnenerkennung optimieren und eigene Fluggeräte effektiv verwalten möchten. Nach diesem Tutorial können Sie die Detektionsübersicht professionell nutzen und Ihre Drohnenflotte sicher integrieren.<o:p></o:p></p></p>
-                    <iframe width="560" height="315" src="https://drive.google.com/file/d/1rp5OXpZkjtbIYqKSVDhr97Ckm0WkjSid/preview" frameborder="0" allowfullscreen=""></iframe>
-                    
-                </div><div class="video-container" data-filename="SkyFend - C2 download offline Kartenmaterial.mp4">
-                    <h3 contenteditable="false" id="video-4">C2 download offline Kartenmaterial</h3>
-                    <p contenteditable="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses praktische Video Tutorial zeigt Ihnen, wie Sie OfflinevKartenmaterial für die SkyFend C2 App herunterladen und verwalten können:<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Navigation zu den Offline-Karteneinstellungen<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Auswahl spezifischer Gebiete mittels Kartenansicht oder GPS-Koordinaten<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Festlegung des Downloadbereichs mit visueller Unterstützung<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Benennung und Speicherung von Kartenbereichen für einfache Zuordnung<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Durchführung des Downloads im Hintergrund<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Automatische Verfügbarkeit des Kartenmaterials im Offline-Modus<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Ideal für Nutzer, die die C2 App in Gebieten mit eingeschränkter Internetverbindung einsetzen. Nach diesem Tutorial können Sie problemlos Offline-Karten vorbereiten und nutzen, um jederzeit einsatzbereit zu sein.<o:p></o:p></p></p>
-                    <iframe width="560" height="315" src="https://drive.google.com/file/d/1rsEOSFgLhRk0GIxpYouInrjJ4oS95tpY/preview" frameborder="0" allowfullscreen=""></iframe>
-                    
-                </div><div class="video-container" data-filename="SkyFend - C2 Gerätemenü.mp4">
-                    <h3 contenteditable="false" id="video-5">C2 Gerätemenü</h3>
-                    <p contenteditable="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses konzise Video-Tutorial führt Sie durch das Geräte-Menü der SkyFend C2 App und zeigt Ihnen, wie Sie Ihre angeschlossenen Geräte effektiv verwalten können:<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Lokalisierung des Geräte Menüs unterhalb des Detektions Menüs<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Übersicht aller verfügbaren und verbundenen aktiven Geräte<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Einsicht in wichtige Geräteinformationen wie<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Name, Seriennummer, Online-Status und Batteriestand<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Zugriff auf erweiterte Geräteinformationen und -einstellungen<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Anleitung zur Vornahme von Sensoreinstellungen direkt in der App<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Ideal für Nutzer, die ihre SkyFend-Geräte optimal verwalten und konfigurieren möchten. Nach diesem Tutorial können Sie schnell auf alle relevanten Geräteinformationen zugreifen und bei Bedarf Anpassungen vornehmen.<o:p></o:p></p></p>
-                    <iframe width="560" height="315" src="https://drive.google.com/file/d/1rsoDHIZERZtacWv3566ODNFGU5ed5f_6/preview" frameborder="0" allowfullscreen=""></iframe>
-                    
-                </div><div class="video-container" data-filename="SkyFend - C2 QR-Code &amp; what3words.mp4">
-                    <h3 contenteditable="false" id="video-6">C2 QR-Code &amp; what3words</h3>
-                    <p contenteditable="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses informative Video-Tutorial zeigt Ihnen, wie Sie QR-Codes in der SkyFend C2 App nutzen können, um Drohnen- und Pilotendaten effizient zu teilen:<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Erzeugung von QR-Codes im Wiedergabemenü und während Drohnenerkennungen<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Unterscheidung zwischen Online- und Offline-QR-Codes für flexible Nutzung<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Schnelle Datenübertragung in andere Systeme oder an Einsatzkräfte<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Integration der gewonnen Daten in Kartendiensten wie Google Maps, What3Words und HERE WeGo<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Praktische Anleitung zum Scannen und Verwenden der QR-Code-Daten<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Ideal für Nutzer, die Positionsdaten schnell und präzise weitergeben müssen. Nach diesem Tutorial können Sie QR-Codes effektiv nutzen, um kritische Informationen sicher und effizient zu kommunizieren.<o:p></o:p></p></p>
-                    <iframe width="560" height="315" src="https://drive.google.com/file/d/1sAvzDu-3NxRTxz8tFX3ExtgFMhtFdWYS/preview" frameborder="0" allowfullscreen=""></iframe>
-                    
-                </div><div class="video-container" data-filename="SkyFend - C2 Schutz Ihrer Daten.mp4">
-                    <h3 contenteditable="false" id="video-7">C2 Schutz Ihrer Daten</h3>
-                    <p contenteditable="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses wichtige Video-Tutorial konzentriert sich auf den Datenschutz in der SkyFend C2 App und zeigt Ihnen, wie Sie Ihre sensiblen Informationen schützen können:<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Kurzer Überblick über:<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Flexible Online- und Offline-Nutzungsmöglichkeiten des Tracers<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Speziell entwickelter Offline-QR-Code für sichere Datenübertragung<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Offline-Verfügbarmachung von Kartenmaterial<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Geräteunabhängige Offline-Aktualisierung<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Detaillierte Demonstration:<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Schritt-für-Schritt-Anleitung zum vollständigen Löschen von Cache und erfassten Daten<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Visuelle Bestätigung der erfolgreichen Datenlöschung<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Ideal für sicherheitsbewusste Nutzer und Organisationen mit hohen Datenschutzanforderungen. Nach diesem Tutorial können Sie die Datenlöschfunktionen der SkyFend C2 App effektiv nutzen und erhalten einen Überblick über weitere Sicherheitsfeatures, die in separaten Videos ausführlich erklärt werden.<o:p></o:p></p></p>
-                    <iframe width="560" height="315" src="https://drive.google.com/file/d/1sAxsZ-gU89hi24Z-onRoK9qsd1IeQdX9/preview" frameborder="0" allowfullscreen=""></iframe>
-                    
-                </div><div class="video-container" data-filename="SkyFend - C2 Wiedergabe + Video Erstellung zur Doku.mp4">
-                    <h3 contenteditable="false" id="video-8">C2 Wiedergabe + Video Erstellung zur Doku</h3>
-                    <p contenteditable="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses umfassende Video-Tutorial führt Sie durch die Wiedergabefunktionen der SkyFend C2 App und zeigt Ihnen, wie Sie eigene Videos zur Dokumentation erstellen können:<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Lokalisierung und Nutzung des Wiedergabemenüs<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Auswahl spezifischer Zeitpunkte oder -räume für die Wiedergabe<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Filterung von Ergebnissen nach Detektionsmethoden<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Navigation der Zeitachse für detaillierte Drohnensichtungen<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Verwendung von Zeitstempeln für schnellen Zugriff auf wichtige Momente<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Zentrierung der Ansicht auf bestimmte Drohnen<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Nutzung der QR-Code-Funktion während der Wiedergabe<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Erstellung individueller Dokumentationsvideos:<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Anleitung zur Aufnahme des Bildschirms während der Wiedergabe<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Tipps zum Zoomen und Einblenden relevanter Daten (z.B. Positionsdaten)<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Information zur Speicherung der erstellten Videos<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Ideal für Nutzer, die vergangene Drohnensichtungen analysieren oder professionelle Dokumentationen erstellen möchten. Nach diesem Tutorial können Sie die Wiedergabefunktionen effektiv nutzen und aussagekräftige Videos für Berichte oder Analysen erstellen.<o:p></o:p></p></p>
-                    <iframe width="560" height="315" src="https://drive.google.com/file/d/1sFZ63hiPoBpGi6FdmXTCP3XH46kKu_56/preview" frameborder="0" allowfullscreen=""></iframe>
-                    
-                </div><div class="video-container" data-filename="SkyFend - C2 Zeitstempel.mp4">
-                    <h3 contenteditable="false" id="video-9">C2 Zeitstempel</h3>
-                    <p contenteditable="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses prägnante Video-Tutorial führt Sie durch die Zeitstempel-Funktion der SkyFend C2 App und zeigt Ihnen, wie Sie wichtige Momente effektiv markieren und verwalten können:<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Lokalisierung des Zeitstempel-Bereichs unterhalb des Gerätemenüs<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Erstellung von Zeitstempeln zur späteren Datenanalyse:<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Auswahl aus verschiedenen Kategorien zur Klassifizierung<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Hinzufügen kurzer Notizen (max. 30 Zeichen) für zusätzliche Details<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Speichern der Zeitstempel für zukünftige Referenz<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Verwaltung bestehender Zeitstempel:<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Zugriff auf die History aller gesetzten Zeitstempel<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Anzeige von Datum, Erfassungszeitpunkt und Notizen für jeden Zeitstempel<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Einfaches Löschen alter oder nicht mehr benötigter Zeitstempel<o:p></o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Ideal für Nutzer, die präzise Ereignisdokumentation und effiziente Datenanalyse benötigen. Nach diesem Tutorial können Sie wichtige Momente schnell markieren und bei Bedarf leicht wiederfinden, was die Nachverfolgung und Analyse von Drohnensichtungen erheblich erleichtert.<o:p></o:p></p></p>
-                    <iframe width="560" height="315" src="https://drive.google.com/file/d/1sR6FckfK_3qtt5abyBLIQcCPXgTTMAmQ/preview" frameborder="0" allowfullscreen=""></iframe>
-                    
-                </div></div>
+                        <div id="video-title-0" class="video-title mce-content-body" style="position: relative;" spellcheck="false"><h1 style="line-height: 32px; break-after: avoid; font-size: 16pt; font-family: Calibri, sans-serif; color: rgb(47, 84, 150);"><span lang="EN-US">C2 App offline update</span></h1></div>
+                        <div id="video-description-0" class="video-description mce-content-body" style="position: relative;" spellcheck="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">In diesem Tutorial Video zeigen wir Ihnen Schritt für Schritt, wie Sie die C2 App von SkyFend auch ohne Internetverbindung aktualisieren können. Die dafür notwendigen Daten können Sie unten im Download Bereich heruntergeladen und per USB-Stick oder SD-Karte übertragen. Wir führen Sie durch den gesamten Installationsprozess und zeigen, wie Sie die App Integrität überprüfen. Dieses Video ist ideal für Nutzer in Gebieten mit eingeschränktem Internetzugang oder erhöhten Sicherheitsanforderungen.</p></div>
+                        <iframe width="560" height="315" src="https://drive.google.com/file/d/1rn3owqGcbFItyaUem5m_g-7BdS41mBCp/preview" frameborder="0" allowfullscreen=""></iframe>
+                        
+                    </div><div class="video-container" data-filename="SkyFend - C2 App online update.mp4">
+                        <div id="video-title-1" class="video-title mce-content-body" style="position: relative;" spellcheck="false"><h1 style="line-height: 32px; break-after: avoid; font-size: 16pt; font-family: Calibri, sans-serif; color: rgb(47, 84, 150);">C2 App online update</h1></div>
+                        <div id="video-description-1" class="video-description mce-content-body" style="position: relative;" spellcheck="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses Video Tutorial führt Sie durch den einfachen Prozess des Online Updates der C2 App von SkyFend. Wir zeigen Ihnen, wie Sie die neueste Version direkt über Ihre Internetverbindung herunterladen und installieren können. Sie lernen, wie Sie die App auf verfügbare Updates prüfen, den Download Vorgang starten und die Installation sicher durchführen. Zusätzlich erklären wir, wie Sie die erfolgreiche Aktualisierung verifizieren und was zu tun ist, falls Probleme auftreten. Ideal für alle Nutzer, die ihre C2 App schnell und unkompliziert auf dem neuesten Stand halten möchten</p></div>
+                        <iframe width="560" height="315" src="https://drive.google.com/file/d/1rnpVh56ezzYTq77dqQcyRmDiPlB2ehQ9/preview" frameborder="0" allowfullscreen=""></iframe>
+                        
+                    </div><div class="video-container" data-filename="SkyFend - C2 Darstellung &amp; Ausrichtung.mp4">
+                        <div id="video-title-2" class="video-title mce-content-body" style="position: relative;" spellcheck="false"><h1 style="line-height: 32px; break-after: avoid; font-size: 16pt; font-family: Calibri, sans-serif; color: rgb(47, 84, 150);">C2 Darstellung &amp; Ausrichtung</h1></div>
+                        <div id="video-description-2" class="video-description mce-content-body" style="position: relative;" spellcheck="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses Video Tutorial führt Sie durch die wesentlichen Funktionen der Benutzeroberfläche der SkyFend C2 App. Sie lernen, wie Sie:</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Das Alarmmanagement für Drohnenmeldungen nutzen</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Mit dem Messwerkzeug präzise Entfernungen bestimmen</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Die Kartenausrichtung anpassen und den Nordpfeil verwenden</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Zwischen verschiedenen Kartenansichten wechseln</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Flugbahnen von Drohnen visualisieren und anpassen</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Ihre Position manuell setzen können</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Ideal für neue Nutzer und zur Auffrischung für erfahrene Anwender. Nach diesem Tutorial navigieren Sie souverän durch die Hauptfunktionen der App und optimieren die Darstellung nach Ihren Bedürfnissen.</p></div>
+                        <iframe width="560" height="315" src="https://drive.google.com/file/d/1rolWhoUs-95MVvrlmTWVfPw4eCf2WLyx/preview" frameborder="0" allowfullscreen=""></iframe>
+                        
+                    </div><div class="video-container" data-filename="SkyFend - C2 Detektionsübersicht.mp4">
+                        <div id="video-title-3" class="video-title mce-content-body" style="position: relative;" spellcheck="false"><h1 style="line-height: 32px; break-after: avoid; font-size: 16pt; font-family: Calibri, sans-serif; color: rgb(47, 84, 150);">C2 Detektionsübersicht</h1></div>
+                        <div id="video-description-3" class="video-description mce-content-body" style="position: relative;" spellcheck="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses umfassende Video Tutorial führt Sie durch die Detektionsübersicht der SkyFend C2 App und erklärt wichtige Funktionen zur Drohnenverwaltung:</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Unterscheidung zwischen fremden und bekannten Drohnen in der Übersicht</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Schnelles Erfassen erkannter Drohnen als 'bekannt'</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Erstellung und Verwaltung der Whitelist für eigene Drohnen</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Detaillierte Eingabe von Drohneninformationen (Anbieter, Seriennummer, Modell, Zweck)</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Import und Export von Whitelist-Daten für effiziente Verwaltung</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Ideal für Nutzer, die die Drohnenerkennung optimieren und eigene Fluggeräte effektiv verwalten möchten. Nach diesem Tutorial können Sie die Detektionsübersicht professionell nutzen und Ihre Drohnenflotte sicher integrieren.</p></div>
+                        <iframe width="560" height="315" src="https://drive.google.com/file/d/1rp5OXpZkjtbIYqKSVDhr97Ckm0WkjSid/preview" frameborder="0" allowfullscreen=""></iframe>
+                        
+                    </div><div class="video-container" data-filename="SkyFend - C2 download offline Kartenmaterial.mp4">
+                        <div id="video-title-4" class="video-title mce-content-body" style="position: relative;" spellcheck="false"><h1 style="line-height: 32px; break-after: avoid; font-size: 16pt; font-family: Calibri, sans-serif; color: rgb(47, 84, 150);"><span lang="EN-US">C2 download offline Kartenmaterial</span></h1></div>
+                        <div id="video-description-4" class="video-description mce-content-body" style="position: relative;" spellcheck="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses praktische Video Tutorial zeigt Ihnen, wie Sie OfflinevKartenmaterial für die SkyFend C2 App herunterladen und verwalten können:</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Navigation zu den Offline-Karteneinstellungen</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Auswahl spezifischer Gebiete mittels Kartenansicht oder GPS-Koordinaten</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Festlegung des Downloadbereichs mit visueller Unterstützung</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Benennung und Speicherung von Kartenbereichen für einfache Zuordnung</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Durchführung des Downloads im Hintergrund</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Automatische Verfügbarkeit des Kartenmaterials im Offline-Modus</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Ideal für Nutzer, die die C2 App in Gebieten mit eingeschränkter Internetverbindung einsetzen. Nach diesem Tutorial können Sie problemlos Offline-Karten vorbereiten und nutzen, um jederzeit einsatzbereit zu sein.</p></div>
+                        <iframe width="560" height="315" src="https://drive.google.com/file/d/1rsEOSFgLhRk0GIxpYouInrjJ4oS95tpY/preview" frameborder="0" allowfullscreen=""></iframe>
+                        
+                    </div><div class="video-container" data-filename="SkyFend - C2 Gerätemenü.mp4">
+                        <div id="video-title-5" class="video-title mce-content-body" style="position: relative;" spellcheck="false"><h1 style="line-height: 32px; break-after: avoid; font-size: 16pt; font-family: Calibri, sans-serif; color: rgb(47, 84, 150);">C2 Gerätemenü</h1></div>
+                        <div id="video-description-5" class="video-description mce-content-body" style="position: relative;" spellcheck="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses konzise Video-Tutorial führt Sie durch das Geräte-Menü der SkyFend C2 App und zeigt Ihnen, wie Sie Ihre angeschlossenen Geräte effektiv verwalten können:</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Lokalisierung des Geräte Menüs unterhalb des Detektions Menüs</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Übersicht aller verfügbaren und verbundenen aktiven Geräte</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Einsicht in wichtige Geräteinformationen wie Name, Seriennummer, Online-Status und Batteriestand</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Zugriff auf erweiterte Geräteinformationen und -einstellungen</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Anleitung zur Vornahme von Sensoreinstellungen direkt in der App</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Ideal für Nutzer, die ihre SkyFend-Geräte optimal verwalten und konfigurieren möchten. Nach diesem Tutorial können Sie schnell auf alle relevanten Geräteinformationen zugreifen und bei Bedarf Anpassungen vornehmen.</p></div>
+                        <iframe width="560" height="315" src="https://drive.google.com/file/d/1rsoDHIZERZtacWv3566ODNFGU5ed5f_6/preview" frameborder="0" allowfullscreen=""></iframe>
+                        
+                    </div><div class="video-container" data-filename="SkyFend - C2 QR-Code &amp; what3words.mp4">
+                        <div id="video-title-6" class="video-title mce-content-body" style="position: relative;" spellcheck="false"><h1 style="line-height: 32px; break-after: avoid; font-size: 16pt; font-family: Calibri, sans-serif; color: rgb(47, 84, 150);">C2 QR-Code &amp; what3words</h1></div>
+                        <div id="video-description-6" class="video-description mce-content-body" style="position: relative;" spellcheck="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses informative Video-Tutorial zeigt Ihnen, wie Sie QR-Codes in der SkyFend C2 App nutzen können, um Drohnen- und Pilotendaten effizient zu teilen:</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Erzeugung von QR-Codes im Wiedergabemenü und während Drohnenerkennungen</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Unterscheidung zwischen Online- und Offline-QR-Codes für flexible Nutzung</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Schnelle Datenübertragung in andere Systeme oder an Einsatzkräfte</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Integration der gewonnen Daten in Kartendiensten wie Google Maps, What3Words und HERE WeGo</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Praktische Anleitung zum Scannen und Verwenden der QR-Code-Daten</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Ideal für Nutzer, die Positionsdaten schnell und präzise weitergeben müssen. Nach diesem Tutorial können Sie QR-Codes effektiv nutzen, um kritische Informationen sicher und effizient zu kommunizieren.</p></div>
+                        <iframe width="560" height="315" src="https://drive.google.com/file/d/1sAvzDu-3NxRTxz8tFX3ExtgFMhtFdWYS/preview" frameborder="0" allowfullscreen=""></iframe>
+                        
+                    </div><div class="video-container" data-filename="SkyFend - C2 Schutz Ihrer Daten.mp4">
+                        <div id="video-title-7" class="video-title mce-content-body" style="position: relative;" spellcheck="false"><h1 style="line-height: 32px; break-after: avoid; font-size: 16pt; font-family: Calibri, sans-serif; color: rgb(47, 84, 150);">C2 Schutz Ihrer Daten</h1></div>
+                        <div id="video-description-7" class="video-description mce-content-body" style="position: relative;" spellcheck="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses wichtige Video-Tutorial konzentriert sich auf den Datenschutz in der SkyFend C2 App und zeigt Ihnen, wie Sie Ihre sensiblen Informationen schützen können:</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Kurzer Überblick über:</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Flexible Online- und Offline-Nutzungsmöglichkeiten des Tracers</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Speziell entwickelter Offline-QR-Code für sichere Datenübertragung</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Offline-Verfügbarmachung von Kartenmaterial</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Geräteunabhängige Offline-Aktualisierung</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Detaillierte Demonstration:</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Schritt-für-Schritt-Anleitung zum vollständigen Löschen von Cache und erfassten Daten</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Visuelle Bestätigung der erfolgreichen Datenlöschung</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Ideal für sicherheitsbewusste Nutzer und Organisationen mit hohen Datenschutzanforderungen. Nach diesem Tutorial können Sie die Datenlöschfunktionen der SkyFend C2 App effektiv nutzen und erhalten einen Überblick über weitere Sicherheitsfeatures, die in separaten Videos ausführlich erklärt werden.</p></div>
+                        <iframe width="560" height="315" src="https://drive.google.com/file/d/1sAxsZ-gU89hi24Z-onRoK9qsd1IeQdX9/preview" frameborder="0" allowfullscreen=""></iframe>
+                        
+                    </div><div class="video-container" data-filename="SkyFend - C2 Wiedergabe + Video Erstellung zur Doku.mp4">
+                        <div id="video-title-8" class="video-title mce-content-body" style="position: relative;" spellcheck="false"><h1 style="line-height: 32px; break-after: avoid; font-size: 16pt; font-family: Calibri, sans-serif; color: rgb(47, 84, 150);">C2 Wiedergabe + Video Erstellung zur Doku</h1></div>
+                        <div id="video-description-8" class="video-description mce-content-body" style="position: relative;" spellcheck="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses umfassende Video-Tutorial führt Sie durch die Wiedergabefunktionen der SkyFend C2 App und zeigt Ihnen, wie Sie eigene Videos zur Dokumentation erstellen können:</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Lokalisierung und Nutzung des Wiedergabemenüs</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Auswahl spezifischer Zeitpunkte oder -räume für die Wiedergabe</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Filterung von Ergebnissen nach Detektionsmethoden</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Navigation der Zeitachse für detaillierte Drohnensichtungen</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Verwendung von Zeitstempeln für schnellen Zugriff auf wichtige Momente</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Zentrierung der Ansicht auf bestimmte Drohnen</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Nutzung der QR-Code-Funktion während der Wiedergabe</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Erstellung individueller Dokumentationsvideos:</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Anleitung zur Aufnahme des Bildschirms während der Wiedergabe</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Tipps zum Zoomen und Einblenden relevanter Daten (z.B. Positionsdaten)</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Information zur Speicherung der erstellten Videos</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Ideal für Nutzer, die vergangene Drohnensichtungen analysieren oder professionelle Dokumentationen erstellen möchten. Nach diesem Tutorial können Sie die Wiedergabefunktionen effektiv nutzen und aussagekräftige Videos für Berichte oder Analysen erstellen.</p></div>
+                        <iframe width="560" height="315" src="https://drive.google.com/file/d/1sFZ63hiPoBpGi6FdmXTCP3XH46kKu_56/preview" frameborder="0" allowfullscreen=""></iframe>
+                        
+                    </div><div class="video-container" data-filename="SkyFend - C2 Zeitstempel.mp4">
+                        <div id="video-title-9" class="video-title mce-content-body" style="position: relative;" spellcheck="false"><h1 style="line-height: 32px; break-after: avoid; font-size: 16pt; font-family: Calibri, sans-serif; color: rgb(47, 84, 150);">C2 Zeitstempel</h1></div>
+                        <div id="video-description-9" class="video-description mce-content-body" style="position: relative;" spellcheck="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Dieses prägnante Video-Tutorial führt Sie durch die Zeitstempel-Funktion der SkyFend C2 App und zeigt Ihnen, wie Sie wichtige Momente effektiv markieren und verwalten können:</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Lokalisierung des Zeitstempel-Bereichs unterhalb des Gerätemenüs</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Erstellung von Zeitstempeln zur späteren Datenanalyse:</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Auswahl aus verschiedenen Kategorien zur Klassifizierung</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Hinzufügen kurzer Notizen (max. 30 Zeichen) für zusätzliche Details</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Speichern der Zeitstempel für zukünftige Referenz</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Verwaltung bestehender Zeitstempel:</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Zugriff auf die History aller gesetzten Zeitstempel</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Anzeige von Datum, Erfassungszeitpunkt und Notizen für jeden Zeitstempel</p>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 72pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; text-indent: -18pt;">•<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Einfaches Löschen alter oder nicht mehr benötigter Zeitstempel</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Ideal für Nutzer, die präzise Ereignisdokumentation und effiziente Datenanalyse benötigen. Nach diesem Tutorial können Sie wichtige Momente schnell markieren und bei Bedarf leicht wiederfinden, was die Nachverfolgung und Analyse von Drohnensichtungen erheblich erleichtert.</p></div>
+                        <iframe width="560" height="315" src="https://drive.google.com/file/d/1sR6FckfK_3qtt5abyBLIQcCPXgTTMAmQ/preview" frameborder="0" allowfullscreen=""></iframe>
+                        
+                    </div></div>
             
         </div>
         
         <div id="fileSection">
-            <h2 id="fileTitle" contenteditable="false">Datenblätter I Anleitungen I Aktualisierungen&nbsp;</h2>
+            <div id="fileTitle" class="file-title mce-content-body" style="position: relative;" spellcheck="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; font-weight: 400; text-align: center;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; font-weight: 400; text-align: center;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; font-weight: 400; text-align: center;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; font-weight: 400; text-align: center;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; font-weight: 400; text-align: center;"><strong>Datenblätter I Anleitungen I Aktualisierungen</strong></p></div>
             <div id="fileList"><div class="file-container">
-                    <div class="file-title-container">
-                        <img src="https://cdn-icons-png.flaticon.com/512/136/136549.png" alt="Datei Icon" class="file-icon">
-                        <h3 contenteditable="false" id="file-0">240606-1 - Anleitung - Tracer-P DE.pdf</h3>
-                    </div>
-                    <p contenteditable="false">240606-1 - Anleitung - Tracer-P DE.pdf</p>
-                    
-                        <a href="https://drive.google.com/uc?export=download&amp;id=101lTRJ5j8cGGNitR1254-LbV9kRkk-XY" download="" id="fileLink1-1">Download</a>
+                        <div class="file-title-container">
+                            <img src="https://cdn-icons-png.flaticon.com/512/136/136549.png" alt="Datei Icon" class="file-icon">
+                            <div id="file-title-0" class="file-title mce-content-body" style="position: relative;" spellcheck="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; font-weight: 400;"><strong><span style="font-size: 16pt; line-height: 32px;">Tracer P - Anleitung Deutsch</span></strong></p></div>
+                        </div>
+                        <div id="file-description-0" class="file-description mce-content-body" style="position: relative;" spellcheck="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Bedienungsanleitung für den SkyFend Tracer P - Ihr tragbarer &amp; teilstationärer UAS Detektor. Diese umfassende Anleitung bietet Ihnen alle wichtigen Informationen zum innovativen SkyFend Tracer P, einem hochmodernen System zur UAV-Detektion. Sie finden darin:</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<ul style="margin-bottom: 0cm; margin-top: 0cm;" type="disc">
+<li class="MsoNormal" style="margin: 0cm; text-align: justify; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Detaillierte Produkteinführung und technische Spezifikationen</li>
+<li class="MsoNormal" style="margin: 0cm; text-align: justify; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Vollständige Übersicht des Lieferumfangs</li>
+<li class="MsoNormal" style="margin: 0cm; text-align: justify; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Schritt-für-Schritt-Anleitung zur Inbetriebnahme</li>
+<li class="MsoNormal" style="margin: 0cm; text-align: justify; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Erklärung aller Funktionen und Bedienelemente</li>
+<li class="MsoNormal" style="margin: 0cm; text-align: justify; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Anweisungen zur Verbindung mit dem C2 System</li>
+</ul>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Perfekt für Anwender, die das volle Potenzial ihres Tracer P ausschöpfen möchten. Laden Sie die Anleitung herunter und machen Sie sich mit den Fähigkeiten dieses leistungsstarken UAS Detektors vertraut.</p></div>
                         
-                    
-                    <div style="text-align: right; margin-top: 10px;">
+                            <a href="https://drive.google.com/uc?export=download&amp;id=101lTRJ5j8cGGNitR1254-LbV9kRkk-XY" id="fileLink0-0" target="_blank">Download</a>
+                            
                         
+                        <div style="text-align: right; margin-top: 10px;">
+                            
+                            
+                        </div>
+                    </div><div class="file-container">
+                        <div class="file-title-container">
+                            <img src="https://cdn-icons-png.flaticon.com/512/136/136549.png" alt="Datei Icon" class="file-icon">
+                            <div id="file-title-1" class="file-title mce-content-body" style="position: relative;" spellcheck="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif; font-weight: 400;"><strong><span style="font-size: 16pt; line-height: 32px;">SkyFend C2 App V1.0.14.8</span></strong></p></div>
+                        </div>
+                        <div id="file-description-1" class="file-description mce-content-body" style="position: relative;" spellcheck="false"><p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Hier finden Sie die aktuellste Version der C2 App für Ihren SkyFend Tracer P:</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<ul style="margin-bottom: 0cm; margin-top: 0cm;" type="disc">
+<li class="MsoNormal" style="margin: 0cm; text-align: justify; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Neueste APK-Datei für das manuelle Update Ihrer C2 App</li>
+<li class="MsoNormal" style="margin: 0cm; text-align: justify; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Enthält die aktuellsten Funktionen und Verbesserungen</li>
+</ul>
+<p class="MsoNormal" style="margin: 0cm 0cm 0cm 36pt; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">&nbsp;</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Wie Sie das Update durchführen: Für eine detaillierte Anleitung zum Aktualisierungsprozess schauen Sie bitte in unsere dazugehörigen Schulungsvideos. Dort finden Sie Schritt-für-Schritt-Anleitungen für einen reibungslosen Update-Vorgang.</p>
+<p class="MsoNormal" style="margin: 0cm; line-height: 24px; font-size: 12pt; font-family: Calibri, sans-serif;">Hinweis: Diese Methode ermöglicht auch Offline-Updates, ideal für Einsätze ohne Internetverbindung.</p></div>
                         
-                    </div>
-                </div></div>
+                            <a href="https://drive.google.com/drive/folders/191sUO6yi4us0bZSDefgaruk82BmgTxR_?usp=sharing" id="fileLink1-0" target="_blank">https://drive.google.com/drive/folders/191sUO6yi4us0bZSDefgaruk82BmgTxR_?usp=sharing</a>
+                            
+                        
+                            <a href="file:///Users/superuser/Downloads/Schulungsplattform%20V1-.html#" id="fileLink1-1" target="_blank">Download</a>
+                            
+                        
+                        <div style="text-align: right; margin-top: 10px;">
+                            
+                            
+                        </div>
+                    </div></div>
             
         </div>
    
-        <!-- Beginn CODE für Admin-Logo-Bearbeitungsbox -->
-        
-        <!-- Ende CODE für Admin-Logo-Bearbeitungsbox -->
-
-<!---->
-    <!--hier sind neue Elemente-->
-        
-        
-        <input type="file" id="fileInput" accept=".json" style="display:none" onchange="handleFile(event)">
-<!---->
         
 
-        <!-- Beginn new CODE: Button zum Export der Kundenseite -->
         
-        <!-- END new CODE -->
         
-
+        
+        
+        
+        
     </div>
 
+    
 
 
-    <script>
-        let isLocked = false;
-        const PIN = "DP44332211SkyFend";
-/////
-    // hier sind noch neue funktionen hinzugefügt.
-
-    // Daten in eine Datei exportieren
-    function exportData() {
-        const data = {
-            mainTitle: document.getElementById('mainTitle').textContent,
-            videoTitle: document.getElementById('videoTitle').textContent,
-            fileTitle: document.getElementById('fileTitle').textContent,
-            navTitle: document.getElementById('navTitle').textContent, // Speichere die Inhaltsüberschrift
-            sidebarWidth: getComputedStyle(document.documentElement).getPropertyValue('--sidebar-width'),
-            logo1Link: document.getElementById('logo1Link').value, // Hinzugefügt
-            logo2Link: document.getElementById('logo2Link').value, // Hinzugefügt
-            logo1Width: document.getElementById('logo1Width').value, // Hinzugefügt
-            logo2Width: document.getElementById('logo2Width').value, // Hinzugefügt
-            titleMarginBottom: getComputedStyle(document.documentElement).getPropertyValue('--title-margin-bottom'), // Speichern des Margin-Werts
-            mainTitleMarginBottom: getComputedStyle(document.documentElement).getPropertyValue('--main-title-margin-bottom'), // Speichern des Abstands zwischen Hauptüberschrift und Video-Bereich
-            videos: Array.from(document.querySelectorAll('#videoList .video-container')).map(container => ({
-                title: container.querySelector('h3').textContent,
-                description: container.querySelector('p').textContent,
-                link: container.querySelector('iframe').src,
-                filename: container.dataset.filename // Neuer Dateiname
-            })),
-            files: Array.from(document.querySelectorAll('#fileList .file-container')).map((container, fileIndex) => ({
-                title: container.querySelector('h3').textContent,
-                description: container.querySelector('p').textContent,
-                links: Array.from(container.querySelectorAll('a')).map((link, linkIndex) => ({
-                    link: link.href,
-                    name: link.textContent,
-                    id: `fileLink${fileIndex + 1}-${linkIndex + 1}` // Store the ID in JSON for restoration
-                }))
-            }))
-
-        };
-
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'seite_daten.json';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }
-
-    // Beginn new CODE
-
-    // Funktion zum Aktualisieren der Logo-Links
-    function updateLogoLink(logoNumber) {
-        const linkInput = document.getElementById(`logo${logoNumber}Link`).value;
-        const fileId = extractFileId(linkInput);
-        const thumbnailLink = `https://drive.google.com/thumbnail?id=${fileId}`;
-
-        if (logoNumber === 1) {
-            document.querySelector('.logo1').src = thumbnailLink;
-        } else if (logoNumber === 2) {
-            document.querySelector('.logo2').src = thumbnailLink;
-        }
-    }
-
-    // Export der Kundenseite
-    function exportCustomerPage() {
-        const clone = document.documentElement.cloneNode(true);
-
-        // Entferne Bearbeitungskontrollen und den Kundenseite-Export-Button
-        const editControls = clone.querySelectorAll('.edit-controls, .edit-control, #exportButton, #importButton, #lockButton, #exportCustomerButton, #adjustSidebarButton, #adminLogoSection');
-        editControls.forEach(el => el.remove());
-
-        // Stelle sicher, dass Inhalte, die vorher bearbeitbar waren, nicht mehr bearbeitbar sind, aber sichtbar bleiben
-        const editableElements = clone.querySelectorAll('[contenteditable]');
-        editableElements.forEach(el => {
-            el.setAttribute('contenteditable', 'false');
-        });
-
-        // Entferne die Buttons "Datei entfernen" und "Neuen Link hinzufügen"
-        const removeButtons = clone.querySelectorAll('button[onclick^="removeFile"], button[onclick^="addAnotherLink"]');
-        removeButtons.forEach(button => button.remove());
-
-        // Update Navigation und alle Inhalte
-        const htmlContent = `<!DOCTYPE html>\n${clone.outerHTML}`;
-        const blob = new Blob([htmlContent], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'kundenseite.html';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }
-    // END new CODE
-
-    // Daten importieren
-    function importData() {
-        document.getElementById('fileInput').click();
-    }
-
-    function updateHeaderMarginTop() {
-        const marginTop = document.getElementById('headerMarginTop').value + 'px';
-        document.querySelector('header').style.marginTop = marginTop;
-    }
-
-    // Datei importieren und Daten wiederherstellen
-    function handleFile(event) {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-
-        reader.onload = function(event) {
-            const data = JSON.parse(event.target.result);
-
-            document.getElementById('mainTitle').textContent = data.mainTitle || '';
-            document.getElementById('videoTitle').textContent = data.videoTitle || '';
-            document.getElementById('fileTitle').textContent = data.fileTitle || '';
-            document.getElementById('navTitle').textContent = data.navTitle || ''; // Inhaltsüberschrift wiederherstellen
-            
-            if (data.sidebarWidth) {
-                document.documentElement.style.setProperty('--sidebar-width', data.sidebarWidth);
-            }
-
-            if (data.logo1Link) {
-                document.getElementById('logo1Link').value = data.logo1Link;
-                updateLogoLink(1);
-            }
-
-            if (data.logo2Link) {
-                document.getElementById('logo2Link').value = data.logo2Link;
-                updateLogoLink(2);
-            }
-
-            if (data.logo1Width) {
-                document.getElementById('logo1Width').value = data.logo1Width;
-                updateLogoSize(1);
-            }
-            if (data.logo2Width) {
-                document.getElementById('logo2Width').value = data.logo2Width;
-                updateLogoSize(2);
-            }
-
-            if (data.titleMarginBottom) {
-                document.documentElement.style.setProperty('--title-margin-bottom', data.titleMarginBottom);
-                document.getElementById('titleMarginBottom').value = parseInt(data.titleMarginBottom);
-            }
-
-            if (data.mainTitleMarginBottom) {
-                document.documentElement.style.setProperty('--main-title-margin-bottom', data.mainTitleMarginBottom);
-                document.getElementById('mainTitleMarginBottom').value = parseInt(data.mainTitleMarginBottom);
-            }
-
-            // Videos wiederherstellen
-            const videoList = document.getElementById('videoList');
-            videoList.innerHTML = '';
-            data.videos.forEach(video => {
-                const videoContainer = document.createElement('div');
-                videoContainer.className = 'video-container';
-                videoContainer.dataset.filename = video.filename || ''; // Dateiname wiederherstellen
-                videoContainer.innerHTML = `
-                    <h3 contenteditable="true">${video.title || 'Standard Video Name'}</h3>
-                    <p contenteditable="true">${video.description}</p>
-                    <iframe width="560" height="315" src="${video.link}" frameborder="0" allowfullscreen></iframe>
-                    <div class="edit-controls">
-                        <input type="text" placeholder="Google Drive Video-Link" value="${video.link}">
-                        <input type="text" placeholder="Dateiname" value="${video.filename || ''}">
-                        <button onclick="updateVideoLink(this)">aktualisieren</button>
-                        <button onclick="removeVideo(this)">Video entfernen</button>
-                    </div>
-                `;
-                videoList.appendChild(videoContainer);
-            });
-
-
-            // Dateien wiederherstellen
-            const fileList = document.getElementById('fileList');
-            fileList.innerHTML = ''; // Clear existing files
-
-            data.files.forEach((file, fileIndex) => {
-                const fileContainer = document.createElement('div');
-                fileContainer.className = 'file-container';
-
-                // Loop through each link associated with the file and restore proper IDs
-                let linksHTML = '';
-                file.links.forEach((link, linkIndex) => {
-                    linksHTML += `
-                        <a href="${link.link}" download id="fileLink${fileIndex + 1}-${linkIndex + 1}">${link.name}</a>
-                        <div class="edit-controls">
-                            <input type="text" placeholder="Google Drive Datei-Link" id="fileInput${fileIndex + 1}-${linkIndex + 1}" value="${link.link}">
-                            <button onclick="updateFileLink(${fileIndex + 1}-${linkIndex + 1})">Link aktualisieren</button>
-                            <input type="text" placeholder="Link Name" id="fileName${fileIndex + 1}-${linkIndex + 1}" value="${link.name}">
-                            <button onclick="updateFileName(${fileIndex + 1}-${linkIndex + 1})">Name aktualisieren</button>
-                            <button onclick="deleteLink(${fileIndex + 1}-${linkIndex + 1}, this)">Link löschen</button>
-                        </div>
-                    `;
-                });
-
-                // Add the file container with its links
-                fileContainer.innerHTML = `
-                    <div class="file-title-container">
-                        <img src="https://cdn-icons-png.flaticon.com/512/136/136549.png" alt="Datei Icon" class="file-icon">
-                        <h3 contenteditable="true">${file.title}</h3>
-                    </div>
-                    <p contenteditable="true">${file.description}</p>
-                    ${linksHTML}
-                    <div style="text-align: right; margin-top: 10px;">
-                        <button onclick="addAnotherLink(${fileIndex + 1})">Neuen Link hinzufügen</button>
-                        <button onclick="removeFile(this)">Datei entfernen</button>
-                    </div>
-                `;
-                fileList.appendChild(fileContainer);
-            });
-
-            // Ensure the "Add New Link" button is placed after all the links are imported
-            document.getElementById("fileSection").appendChild(document.querySelector('.button[onclick="addFile()"]'));
-        };
-
-        reader.readAsText(file);
-    }
-
-    function updateLogoSize(logoNumber) {
-        const sizeInput = document.getElementById(`logo${logoNumber}Width`).value + 'px';
-        
-        if (logoNumber === 1) {
-            document.querySelector('.logo1').style.width = sizeInput;
-        } else if (logoNumber === 2) {
-            document.querySelector('.logo2').style.width = sizeInput;
-        }
-    }
-
-
-    // Seitenbreite anpassen im Bearbeitungsmodus
-    function adjustSidebarWidth() {
-        // Aktuelle Sidebar-Breite auslesen
-        const currentWidth = getComputedStyle(document.documentElement).getPropertyValue('--sidebar-width').trim() || "200px";
-        
-        // Eingabefeld mit der aktuellen Sidebar-Breite als Standardwert anzeigen
-        const width = prompt("Geben Sie die neue Breite der Sidebar in px ein:", currentWidth.replace('px', ''));
-        
-        if (width) {
-            document.documentElement.style.setProperty('--sidebar-width', width + "px");
-            localStorage.setItem('sidebarWidth', width + "px");  // Speichern der Sidebar-Breite in localStorage
-        }
-    }
-
-
-    // Breitenanpassung Sidebar auf Kundenseite beibehalten
-    function applySidebarWidth() {
-        const savedWidth = localStorage.getItem('sidebarWidth');
-        if (savedWidth) {
-            document.documentElement.style.setProperty('--sidebar-width', savedWidth);
-        }
-    }
-
-    // Seiteninitialisierung
-    applySidebarWidth();
-
-    function updateTitleMargin() {
-        const marginBottom = document.getElementById('titleMarginBottom').value + 'px';
-        document.documentElement.style.setProperty('--title-margin-bottom', marginBottom);
-        localStorage.setItem('titleMarginBottom', marginBottom);
-    }
-
-    function updateMainTitleMargin() {
-        const marginBottom = document.getElementById('mainTitleMarginBottom').value + 'px';
-        document.documentElement.style.setProperty('--main-title-margin-bottom', marginBottom);
-        localStorage.setItem('mainTitleMarginBottom', marginBottom);
-    }
-
-    // Beim Laden der Seite gespeicherten Wert anwenden
-    window.onload = function() {
-        const savedMarginBottom = localStorage.getItem('titleMarginBottom');
-        if (savedMarginBottom) {
-            document.documentElement.style.setProperty('--title-margin-bottom', savedMarginBottom);
-            document.getElementById('titleMarginBottom').value = parseInt(savedMarginBottom);
-        }
-
-        const savedMainTitleMarginBottom = localStorage.getItem('mainTitleMarginBottom');
-        if (savedMainTitleMarginBottom) {
-            document.documentElement.style.setProperty('--main-title-margin-bottom', savedMainTitleMarginBottom);
-            document.getElementById('mainTitleMarginBottom').value = parseInt(savedMainTitleMarginBottom);
-        }
-    };
-
-
-/////
-        function addVideo() {
-            const videoList = document.getElementById('videoList');
-            const videoContainer = document.createElement('div');
-            videoContainer.className = 'video-container';
-            videoContainer.innerHTML = `
-                <h3 contenteditable="true">Video Titel</h3>
-                <p contenteditable="true">Beschreibung des Videos</p>
-                <iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
-                <div class="edit-controls">
-                    <input type="text" placeholder="Google Drive Video-Link">
-                    <input type="text" placeholder="Dateiname" value="">
-                    <button onclick="updateVideoLink(this)">Link aktualisieren</button>
-                    <button onclick="removeVideo(this)">Video entfernen</button>
-                </div>
-            `;
-            videoList.appendChild(videoContainer);
-            updateNavigation();
-        }
-
-        function updateVideoLink(button) {
-            const container = button.closest('.video-container');
-            const inputs = container.querySelectorAll('input');
-            const videoLinkInput = inputs[0];
-            const filenameInput = inputs[1];
-            const iframe = container.querySelector('iframe');
-            const fileId = extractFileId(videoLinkInput.value);
-            if (fileId) {
-                iframe.src = `https://drive.google.com/file/d/${fileId}/preview`;
-                // Speichere den Dateinamen im Dataset
-                container.dataset.filename = filenameInput.value;
-            } else {
-                alert('Ungültiger Google Drive Link');
-            }
-            updateNavigation();
-        }
-
-
-        function removeVideo(button) {
-            const container = button.closest('.video-container');
-            container.remove();
-            updateNavigation();
-        }
-
-        function addFile() {
-            const fileList = document.getElementById('fileList');
-            const fileContainer = document.createElement('div');
-            fileContainer.className = 'file-container';
-            const fileIndex = fileList.childElementCount + 1;
-            
-            fileContainer.innerHTML = `
-                <div class="file-title-container">
-                    <img src="https://cdn-icons-png.flaticon.com/512/136/136549.png" alt="Datei Icon" class="file-icon">
-                    <h3 contenteditable="true">Datei Titel</h3>
-                </div>
-                <p contenteditable="true">Beschreibung der Datei</p>
-                <a href="#" download id="fileLink${fileIndex}">Download</a>
-                <div class="edit-controls">
-                    <input type="text" placeholder="Google Drive Datei-Link" id="fileInput${fileIndex}">
-                    <button onclick="updateFileLink(${fileIndex})">Link aktualisieren</button>
-                    <input type="text" placeholder="Link Name" id="fileName${fileIndex}">
-                    <button onclick="updateFileName(${fileIndex})">Name aktualisieren</button>
-                    <button onclick="deleteLink(${fileIndex}, this)">Link löschen</button>
-                </div>
-                <div style="text-align: right; margin-top: 10px;">  <!-- Style ensures "Datei entfernen" is alone -->
-                    <button onclick="addAnotherLink(${fileIndex})">Neuen Link hinzufügen</button>
-                    <button onclick="removeFile(this)" style="display: block; margin-left: auto;">Datei entfernen</button>
-                </div>
-            `;
-            
-            fileList.appendChild(fileContainer);
-            updateNavigation();
-        }
-
-
-        function updateFileName(index) {
-            const input = document.getElementById(`fileName${index}`).value;
-            if (input) {
-                document.getElementById(`fileLink${index}`).textContent = input;
-            }
-        }
-
-
-        function addAnotherLink(index) {
-            const fileContainer = document.querySelector(`#fileLink${index}`).closest('.file-container');
-            const newLinkIndex = document.querySelectorAll('.file-container a').length + 1;
-
-            const newLinkHTML = `
-                <a href="#" download id="fileLink${newLinkIndex}">Neuer Download</a>
-                <div class="edit-controls">
-                    <input type="text" placeholder="Google Drive Datei-Link" id="fileInput${newLinkIndex}">
-                    <button onclick="updateFileLink(${newLinkIndex})">Link aktualisieren</button>
-                    <input type="text" placeholder="Link Name" id="fileName${newLinkIndex}">
-                    <button onclick="updateFileName(${newLinkIndex})">Name aktualisieren</button>
-                    <button onclick="deleteLink(${newLinkIndex}, this)">Link löschen</button>
-                </div>
-            `;
-            fileContainer.insertAdjacentHTML('beforeend', newLinkHTML);
-        }
-
-        function deleteLink(index, button) {
-            const linkContainer = button.closest('.edit-controls');
-            const linkElement = document.getElementById(`fileLink${index}`);
-            linkElement.remove(); // Removes the link
-            linkContainer.remove(); // Removes the edit controls
-            updateNavigation(); // Make sure navigation updates after link removal
-        }
-
-
-
-        
-
-
-
-        function updateFileLink(index) {
-            const input = document.getElementById(`fileInput${index}`).value;
-            const linkElement = document.getElementById(`fileLink${index}`);
-            const fileId = extractFileId(input); // Extrahiere die Datei-ID vom Google Drive Link
-            if (fileId) {
-                linkElement.href = `https://drive.google.com/uc?export=download&id=${fileId}`; // Aktualisiere den href-Attribut mit der Datei-ID
-            } else {
-                alert('Ungültiger Google Drive Link'); // Zeige eine Fehlermeldung, wenn der Link ungültig ist
-            }
-            updateNavigation(); // Rufe die Navigationserneuerung auf, um die Änderungen anzuzeigen
-        }
-
-
-        function removeFile(button) {
-            const container = button.closest('.file-container');
-            container.remove();
-            updateNavigation();
-        }
-
-        // Funktion zum Extrahieren der Datei-ID aus einem Google Drive Link
-        function extractFileId(url) {
-            const match = url.match(/\/d\/(.+?)\/|id=(.+?)(&|$)/);
-            return match ? match[1] || match[2] : null;
-        }
-
-        function toggleLock() {
-            if (isLocked) {
-                const enteredPin = prompt("Bitte geben Sie den PIN ein, um die Seite zu entsperren:");
-                if (enteredPin === PIN) {
-                    isLocked = false;
-                    updateLockState();
-                } else {
-                    alert("Falscher PIN!");
-                }
-            } else {
-                isLocked = true;
-                updateLockState();
-            }
-        }
-
-        function updateLockState() {
-            const editControls = document.querySelectorAll('.edit-controls, .edit-control');
-            const editableElements = document.querySelectorAll('[contenteditable]');
-            
-            editControls.forEach(el => el.classList.toggle('hidden', isLocked));
-            editableElements.forEach(el => el.contentEditable = isLocked ? 'false' : 'true');
-            
-            document.getElementById('lockButton').textContent = isLocked ? 'Seite entsperren' : 'Seite sperren';
-        }
-
-
-
-/// ersetzt. das ist vorher.
-/*
-        function updateNavigation() {
-            const navList = document.getElementById('navList');
-            navList.innerHTML = '';
-            
-            const addNavItem = (title, id) => {
-                const li = document.createElement('li');
-                const a = document.createElement('a');
-                a.href = `#${id}`;
-                a.textContent = title;
-                li.appendChild(a);
-                navList.appendChild(li);
-            };
-
-            addNavItem(document.getElementById('videoTitle').textContent, 'videoSection');
-            document.querySelectorAll('#videoList .video-container h3').forEach((h3, index) => {
-                addNavItem(h3.textContent, `video-${index}`);
-                h3.id = `video-${index}`;
-            });
-
-            addNavItem(document.getElementById('fileTitle').textContent, 'fileSection');
-            document.querySelectorAll('#fileList .file-container h3').forEach((h3, index) => {
-                addNavItem(h3.textContent, `file-${index}`);
-                h3.id = `file-${index}`;
-            });
-        }
-        */
-
-///
-        function updateNavigation() {
-            const navList = document.getElementById('navList');
-            navList.innerHTML = '';
-            
-            const addNavItem = (title, id, isSectionHeading = false) => {
-                const li = document.createElement('li');
-                const a = document.createElement('a');
-                a.href = `#${id}`;
-                a.textContent = title;
-                if (isSectionHeading) {
-                    a.classList.add('section-heading');
-                }
-                li.appendChild(a);
-                navList.appendChild(li);
-            };
-
-            addNavItem(document.getElementById('videoTitle').textContent, 'videoSection', true);
-            document.querySelectorAll('#videoList .video-container h3').forEach((h3, index) => {
-                addNavItem(h3.textContent, `video-${index}`);
-                h3.id = `video-${index}`;
-            });
-
-            addNavItem(document.getElementById('fileTitle').textContent, 'fileSection', true);
-            document.querySelectorAll('#fileList .file-container h3').forEach((h3, index) => {
-                addNavItem(h3.textContent, `file-${index}`);
-                h3.id = `file-${index}`;
-            });
-
-            // Füge am Ende der Navigation unsichtbaren Abstand hinzu
-            const emptySpace = document.createElement('li');
-            emptySpace.className = 'invisible-space';
-            navList.appendChild(emptySpace);
-        }
-
-///
-
-        // Initial update of navigation
-        updateNavigation();
-
-        // Event listeners for title changes
-        document.getElementById('videoTitle').addEventListener('input', updateNavigation);
-        document.getElementById('fileTitle').addEventListener('input', updateNavigation);
-
-        // Mutation observer to watch for changes in video and file lists
-        const observer = new MutationObserver(updateNavigation);
-        observer.observe(document.getElementById('videoList'), { childList: true, subtree: true, characterData: true });
-        observer.observe(document.getElementById('fileList'), { childList: true, subtree: true, characterData: true });
-    </script>
-
-
-</body></html>
+<div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div style="position: static; height: 0px; width: 0px; padding: 0px; margin: 0px; border: 0px;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 204px; left: 497px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-transition tox-editor-dock-fadein" style="max-width: 1231.4px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-transition tox-editor-dock-fadein" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 835px; left: 497px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-transition tox-editor-dock-fadein" style="max-width: 1231.4px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-transition tox-editor-dock-fadein" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 1473px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-transition tox-editor-dock-fadein" style="max-width: 1228px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-transition tox-editor-dock-fadein" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 2288px; left: 497px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-transition tox-editor-dock-fadein" style="max-width: 1231.4px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-transition tox-editor-dock-fadein" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 3018px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-transition tox-editor-dock-fadein" style="max-width: 1228px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-transition tox-editor-dock-fadein" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 3788px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-transition tox-editor-dock-fadein" style="max-width: 1228px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-transition tox-editor-dock-fadein" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 4558px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-transition tox-editor-dock-fadein" style="max-width: 1228px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-transition tox-editor-dock-fadein" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 5329px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-transition tox-editor-dock-fadeout" style="max-width: 1228px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-transition tox-editor-dock-fadeout" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 6377px; left: 497px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-transition tox-editor-dock-fadein" style="max-width: 1231.4px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-transition tox-editor-dock-fadein" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 7085px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-transition tox-editor-dock-fadein" style="max-width: 1228px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-transition tox-editor-dock-fadein" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 8100px; left: 460px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header" style="max-width: 1268px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 8045px; left: 532px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header" style="max-width: 1196px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 116px; left: 460px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="bottomtotop" tabindex="-1" class="tox-editor-header" style="max-width: 1268px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 99px; left: 460px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header" style="max-width: 1268px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-on" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 227px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-fadeout" style="max-width: 1228px; position: fixed; left: 500px; top: 0px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-fadeout" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 829px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header" style="max-width: 1228px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 1431px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header" style="max-width: 1228px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-on" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 2201px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-fadeout" style="max-width: 1228px; position: fixed; left: 500px; top: 0px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-fadeout" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-on" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 2948px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-fadeout" style="max-width: 1228px; position: fixed; left: 500px; top: 0px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-fadeout" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-on" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 3718px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-fadeout" style="max-width: 1228px; position: fixed; left: 500px; top: 0px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-fadeout" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-on" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 4488px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-fadeout" style="max-width: 1228px; position: fixed; left: 500px; top: 0px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-fadeout" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-on" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 5258px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-fadeout" style="max-width: 1228px; position: fixed; left: 500px; top: 0px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-fadeout" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-on" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 6100px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-fadeout" style="max-width: 1228px; position: fixed; left: 500px; top: 0px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-fadeout" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-on" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 7014px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header tox-editor-dock-fadeout" style="max-width: 1228px; position: fixed; left: 500px; top: 0px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux tox-editor-dock-fadeout" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 8082px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header" style="max-width: 1228px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 8543px; left: 532px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header" style="max-width: 1196px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux" style="position: relative; display: none;"></div><div role="application" class="tox tox-tinymce tox-tinymce-inline tox-tinymce--toolbar-sticky-off" aria-disabled="false" style="visibility: hidden; display: none; position: absolute; top: 8580px; left: 500px;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" tabindex="-1" class="tox-editor-header" style="max-width: 1228px;"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"></div></div></div><div class="tox-anchorbar"></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div><div class="tox tox-silver-sink tox-tinymce-aux" style="position: relative; display: none;"></div></body></html>
